@@ -7,8 +7,4 @@ class PlaylistDbEntry:
         self.playListName = playListName
         
     def __str__(self):
-        """ 
-        - string representation of the class
-        """
-
         return f' {self.playListID} {self.playListName}  ' 
