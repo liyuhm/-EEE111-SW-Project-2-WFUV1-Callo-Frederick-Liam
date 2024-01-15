@@ -3,7 +3,6 @@ from PlayListDbSqlite import PlaylistDbSqlite
 from PlayListGuiCtk import PlayListGuiCtk
 
 def main():
-    #db = PlayListDb()
     db = PlaylistDbSqlite()
     app = PlayListGuiCtk(dataBase=db)
     app.mainloop()
