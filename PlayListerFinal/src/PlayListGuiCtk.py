@@ -27,7 +27,7 @@ class PlayListGuiCtk(customtkinter.CTk):
 
         self.font1 = ('Futura', 30, 'bold')
         self.font2 = ('Futura', 26, 'bold')
-        self.font3 = ('Futura', 18, 'bold')
+        self.font3 = ('Futura', 12, 'bold')
 
         # Data Entry Form
         # 'ID' Label and Entry Widgets
