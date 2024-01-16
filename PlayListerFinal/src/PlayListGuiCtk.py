@@ -105,7 +105,7 @@ class PlayListGuiCtk(customtkinter.CTk):
         self.style = ttk.Style(self)
         self.style.theme_use('clam')
         self.style.configure('Treeview', 
-                        font=self.font2, 
+                        font=self.font3, 
                         foreground='#FFFFFF',
                         background='#191414',
                         fieldlbackground='#191414')
