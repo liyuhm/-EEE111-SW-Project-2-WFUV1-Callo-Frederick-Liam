@@ -5,6 +5,7 @@ import tkinter as tk
 from tkinter import messagebox
 from PlayListDbSqlite import PlaylistDbSqlite
 from datetime import date
+from PIL import Image, ImageTk
 
 class PlayListGuiCtk(customtkinter.CTk):
 
@@ -13,84 +14,91 @@ class PlayListGuiCtk(customtkinter.CTk):
         self.db = dataBase
 
         self.title('PlayLister')
-        self.geometry('1500x500')
-        self.config(bg='#191414')
+        self.geometry('1695x953')
+        self.config(bg='#966fd6')
         self.resizable(False, False)
 
-        self.font1 = ('Calibri', 15, 'bold')
-        self.font2 = ('Calibri', 12, 'bold')
-        self.font3 = ('Calibri', 12, 'bold')
+        bg = Image.open("bgimg.jpg")
+        bg = bg.resize((1695, 953), Image.Resampling.LANCZOS)
+        self.bg_photo = ImageTk.PhotoImage(bg)
+
+        self.bg_label = tk.Label(self, image=self.bg_photo)
+        self.bg_label.place(relheight=1, relwidth=1)
+
+        self.font1 = ('Futura', 30, 'bold')
+        self.font2 = ('Futura', 26, 'bold')
+        self.font3 = ('Futura', 18, 'bold')
 
         # Data Entry Form
         # 'ID' Label and Entry Widgets
         self.id_label = self.newCtkLabel('Song ID')
-        self.id_label.place(x=20, y=30)
-        self.id_entry = self.newCtkID()
-        self.id_entry.place(x=110, y=30)
+        self.id_label.place(x=529, y=61)
+        self.id_entry = self.newCtkEntry()
+        self.id_entry.place(x=678, y=56)
 
         # 'Title' Label and Entry Widgets
-        self.title_label = self.newCtkLabel('Song Title')
-        self.title_label.place(x=20, y=70)
+        self.title_label = self.newCtkLabel('Title')
+        self.title_label.place(x=529, y=151)
         self.title_entry = self.newCtkEntry()
-        self.title_entry.place(x=110, y=70)
+        self.title_entry.place(x=678, y=146)
 
         # 'Artist' Label and Entry Widgets
         self.artist_label = self.newCtkLabel('Artist')
-        self.artist_label.place(x=20, y=110)
+        self.artist_label.place(x=529, y=241)
         self.artist_entry = self.newCtkEntry()
-        self.artist_entry.place(x=110, y=110)
+        self.artist_entry.place(x=678, y=236)
 
         # 'Genre' Label and Combo Box Widgets
         self.genre_label = self.newCtkLabel('Genre')
-        self.genre_label.place(x=20, y=150)
+        self.genre_label.place(x=1127, y=54)
         self.genre_cboxVar = StringVar()
         self.genre_cboxOptions = ['Pop', 'K-Pop', 'Rock', 'Hip-Hop', 'RnB', 'Jazz']
         self.genre_cbox = self.newCtkComboBox(options=self.genre_cboxOptions, 
                                     entryVariable=self.genre_cboxVar)
-        self.genre_cbox.place(x=110, y=150)
+        self.genre_cbox.place(x=1343, y=54)
 
        # 'Date_Added' Label and Entry Widgets
         self.added_label = self.newCtkLabel('Date Added')
-        self.added_label.place(x=20, y=190)
+        self.added_label.place(x=1127, y=154)
         self.added_entry = self.newCtkEntry()
-        self.added_entry.place(x=110, y=190)
+        self.added_entry.place(x=1343, y=146)
 
         # 'Spotify Link' Label and Entry Widgets
         self.spot_label = self.newCtkLabel('Spotify Link')
-        self.spot_label.place(x=20, y=230)
+        self.spot_label.place(x=1127, y=247)
         self.spot_entry = self.newCtkEntry()
-        self.spot_entry.place(x=110, y=230)
+        self.spot_entry.place(x=1343, y=236)
 
         #Buttons
         self.add_button = self.newCtkButton(text='Add Song',
                                 onClickHandler=self.add_entry,
-                                fgColor='#1db954',
-                                hoverColor='#1ed760',
-                                borderColor='#1db954')
-        self.add_button.place(x=50,y=350)
+                                fgColor='#BCA4EB',
+                                hoverColor='#6141ac',
+                                borderColor='#966fd6')
+        self.add_button.place(x=53,y=255)
 
         self.new_button = self.newCtkButton(text='New Song',
                                 onClickHandler=lambda:self.clear_form(True))
-        self.new_button.place(x=50,y=400)
+        self.new_button.place(x=53,y=139)
 
         self.update_button = self.newCtkButton(text='Update Song',
                                     onClickHandler=self.update_entry)
-        self.update_button.place(x=360,y=400)
+        self.update_button.place(x=53,y=372)
 
         self.delete_button = self.newCtkButton(text='Remove from Playlist',
                                     onClickHandler=self.delete_entry,
-                                    fgColor='#8D021F',
-                                    hoverColor='#420D09',
-                                    borderColor='#8D021F')
-        self.delete_button.place(x=670,y=400)
+                                    fgColor='#ff5757',
+                                    hoverColor='#ff3131',
+                                    borderColor='#ff5757')
+        self.delete_button.place(x=53,y=487)
 
         self.export_button = self.newCtkButton(text='Export to CSV',
                                     onClickHandler=self.export_to_csv)
-        self.export_button.place(x=980,y=400)
+        self.export_button.place(x=53,y=603)
 
         self.add_button = self.newCtkButton(text = 'Import CSV',
                                             onClickHandler=self.import_from_csv)
-        self.add_button.place(x=1290,y=400)
+        self.add_button.place(x=53,y=720)
 
 
         # Tree View for Database Entries
@@ -121,16 +129,16 @@ class PlayListGuiCtk(customtkinter.CTk):
         self.songtree.heading('Spotify Link', text='Spotify Link')
         self.songtree.heading('Date Added', text='Date Added')
 
-        self.songtree.place(x=400, y=20, width=1000, height=340)
+        self.songtree.place(x=529, y=355, width=1118, height=542)
         self.songtree.bind('<ButtonRelease>', self.read_display_data)
 
         self.add_to_treeview()
 
     # new Label Widget
     def newCtkLabel(self, text = 'CTK Label'):
-        widget_Font=self.font1
-        widget_TextColor='#FFF'
-        widget_BgColor='#161C25'
+        widget_Font=self.font2
+        widget_TextColor='#000000'
+        widget_BgColor='#966fd6'
 
         widget = customtkinter.CTkLabel(self, 
                                     text=text,
@@ -141,12 +149,14 @@ class PlayListGuiCtk(customtkinter.CTk):
 
     # new Entry Widget
     def newCtkEntry(self, text = 'CTK Label'):
-        widget_Font=self.font1
+        widget_Font=self.font2
         widget_TextColor='#000'
         widget_FgColor='#FFF'
-        widget_BorderColor='#0C9295'
+        widget_BorderColor='#966fd6'
         widget_BorderWidth=2
-        widget_Width=250
+        widget_BgColor='#966fd6'
+        widget_Width=304
+        widget_CornerRadius=15
 
         widget = customtkinter.CTkEntry(self,
                                     font=widget_Font,
@@ -154,6 +164,8 @@ class PlayListGuiCtk(customtkinter.CTk):
                                     fg_color=widget_FgColor,
                                     border_color=widget_BorderColor,
                                     border_width=widget_BorderWidth,
+                                    bg_color=widget_BgColor,
+                                    corner_radius=widget_CornerRadius,
                                     width=widget_Width)
         return widget
 
@@ -161,9 +173,10 @@ class PlayListGuiCtk(customtkinter.CTk):
         widget_Font=self.font3
         widget_TextColor='#000'
         widget_FgColor='#FFF'
-        widget_BorderColor='#0C9295'
-        widget_BorderWidth=1
-        widget_Width=80
+        widget_BorderColor='#545454'
+        widget_BorderWidth=2
+        widget_Width=394
+        widget_CornerRadius=15
 
         widget = customtkinter.CTkEntry(self,
                                     font=widget_Font,
@@ -171,6 +184,7 @@ class PlayListGuiCtk(customtkinter.CTk):
                                     fg_color=widget_FgColor,
                                     border_color=widget_BorderColor,
                                     border_width=widget_BorderWidth,
+                                    corner_radius=widget_CornerRadius,
                                     width=widget_Width)
         return widget
 
@@ -186,6 +200,7 @@ class PlayListGuiCtk(customtkinter.CTk):
         widget_BorderWidth=2
         widget_Width=250
         widget_Options=options
+        widget_CornerRadius=15
 
         widget = customtkinter.CTkComboBox(self,
                                         font=widget_Font,
@@ -203,9 +218,9 @@ class PlayListGuiCtk(customtkinter.CTk):
         return widget
 
     # new Button Widget
-    def newCtkButton(self, text = 'CTK Button', onClickHandler=None, fgColor='#1db954', hoverColor='#1ed760', bgColor='#191414', borderColor='#1db954'):
+    def newCtkButton(self, text = 'CTK Button', onClickHandler=None, fgColor='#BCA4EB', hoverColor='#6141ac', bgColor='#966fd6', borderColor='#966fd6'):
         widget_Font=self.font1
-        widget_TextColor='#FFF'
+        widget_TextColor='#000000'
         widget_FgColor=fgColor
         widget_HoverColor=hoverColor
         widget_BackgroundColor=bgColor
@@ -213,7 +228,7 @@ class PlayListGuiCtk(customtkinter.CTk):
         widget_BorderWidth=2
         widget_Cursor='hand2'
         widget_CornerRadius=15
-        widget_Width=260
+        widget_Width=394
         widget_Function=onClickHandler
 
         widget = customtkinter.CTkButton(self,
@@ -228,7 +243,7 @@ class PlayListGuiCtk(customtkinter.CTk):
                                         border_width=widget_BorderWidth,
                                         cursor=widget_Cursor,
                                         corner_radius=widget_CornerRadius,
-                                        width=200)
+                                        width=widget_Width)
        
         return widget
 
